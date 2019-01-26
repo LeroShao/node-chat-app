@@ -10,12 +10,19 @@ socket.on('disconnect', function () {
 
 socket.on('newMessage', function (message) {
   console.log('newMessage', message);
-  // var li = jQuery('<li></li>');
-  // li.text(`${message.from}: ${message.text}`);
-  // jQuery('#messages').append(li);
-jQuery('#messages').append(`<li>${message.from}: ${message.text}</li>`);
+  jQuery('#messages').append(`<li>${message.from}: ${message.text}</li>`);
 });
 
+socket.on('newLocationMessage', function (message) {
+  var li = jQuery('<li></li>');
+  // var li = jQuery(`<li>${message.from}: </li>`);
+  var a = jQuery('<a target="_blank">My current location</a>');
+  a.attr('href', message.url);
+  li.text(`${message.from}: `);
+  li.append(a);
+  jQuery('#messages').append(li);
+  console.log(message);
+})
 //e--event
 jQuery('#message-form').on('submit', function(e) {
   e.preventDefault();
